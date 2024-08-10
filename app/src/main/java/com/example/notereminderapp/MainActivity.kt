@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -41,7 +42,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             NoteReminderAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    NoteApp()
+                    var viewModel = viewModel<NoteViewModel>()
+                    NoteApp(viewModel)
                     }
                 }
             }
@@ -50,8 +52,8 @@ class MainActivity : ComponentActivity() {
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NoteApp(noteViewModel: NoteViewModel = viewModel()){
-    var notelist = noteViewModel.getAllnotes()
+fun NoteApp(noteViewModel: NoteViewModel){
+    var notelist = noteViewModel.notelist.collectAsState().value
 
     NoteScreen( note = notelist, onAddnote ={
         noteViewModel.addNote(it)
