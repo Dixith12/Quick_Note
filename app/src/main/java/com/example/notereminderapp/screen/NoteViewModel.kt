@@ -1,6 +1,7 @@
 package com.example.notereminderapp.screen
 
 import android.util.Log
+import androidx.compose.material3.Text
 import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -27,6 +28,7 @@ class NoteViewModel @Inject constructor(private val Repository: NoteRepository):
                listOfNotes->
                if(listOfNotes.isNullOrEmpty()){
                    Log.d("Empty", "Empty: ")
+
                }else{
                    _noteList.value=listOfNotes
                }

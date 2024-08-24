@@ -29,7 +29,7 @@ fun noteInputText(modifier: Modifier=Modifier,
                   label:String,
                   maxLine:Int=1,
                   onTextChange:(String)->Unit,
-                  onImeAction:()->Unit){
+                  onImeAction:()-> Unit){
     var keyboardController= LocalSoftwareKeyboardController.current
     TextField(value = text ,
         onValueChange =onTextChange,

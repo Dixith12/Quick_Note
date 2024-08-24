@@ -49,7 +49,6 @@ import com.example.notereminderapp.data.Notedatasource
 import com.example.notereminderapp.model.Note
 import com.example.notereminderapp.util.fromDate
 import java.time.format.DateTimeFormatter
-
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -134,7 +133,7 @@ fun noteRow(notes:Note,
                     Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Note",modifier = Modifier.clickable {  onNoteClicked.invoke(notes)  }, tint = androidx.compose.ui.graphics.Color.DarkGray)
                 }
                 Text(text = notes.description,fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                Text(text = fromDate(notes.entryDate.time), fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
+                //Text(text = fromDate(notes.entryDate.time), fontSize = 12.sp, fontWeight = FontWeight.SemiBold)
             }
         } }
 

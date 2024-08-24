@@ -1,5 +1,6 @@
 package com.example.notereminderapp
 
+import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -28,12 +29,14 @@ import com.example.notereminderapp.screen.NoteScreen
 import com.example.notereminderapp.ui.theme.NoteReminderAppTheme
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.notereminderapp.screen.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,20 +45,19 @@ class MainActivity : ComponentActivity() {
         setContent {
             NoteReminderAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    var viewModel = viewModel<NoteViewModel>()
-                    NoteApp(viewModel)
-                    }
+                    NoteApp()
                 }
             }
         }
     }
+}
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
-fun NoteApp(noteViewModel: NoteViewModel){
+fun NoteApp(noteViewModel: NoteViewModel = hiltViewModel()) {
     var notelist = noteViewModel.notelist.collectAsState().value
 
-    NoteScreen( note = notelist, onAddnote ={
+    NoteScreen(note = notelist, onAddnote = {
         noteViewModel.addNote(it)
     }, onRemoveNote = {
         noteViewModel.removeNote(it)
