@@ -30,7 +30,3 @@ Quick Note is a simple and efficient Android app built with Kotlin and Jetpack C
 ## Contributing
 
 Contributions are welcome! Feel free to fork the repository and submit a pull request with your improvements or bug fixes.
-
-## Screenshots
-
-[Add additional screenshots here if needed]
