@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -17,15 +16,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Delete
 import androidx.compose.material.icons.rounded.Notifications
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.TopAppBarDefaults.topAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,8 +32,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.focus.focusModifier
-import androidx.compose.ui.graphics.BlendMode.Companion.Color
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -44,11 +40,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.notereminderapp.component.noteButton
-import com.example.notereminderapp.component.noteInputText
+import com.example.notereminderapp.component.NoteInputText
 import com.example.notereminderapp.data.Notedatasource
 import com.example.notereminderapp.model.Note
-import com.example.notereminderapp.util.fromDate
-import java.time.format.DateTimeFormatter
+
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,12 +62,15 @@ fun NoteScreen(modifier: Modifier=Modifier,
         TopAppBar(title = { Text(text = "Notes", textAlign = TextAlign.Center, fontSize = 27.sp, fontWeight = FontWeight.Bold)}, modifier = modifier.clip(RoundedCornerShape(corner = CornerSize(10.dp))),
             actions = {
             Icon(imageVector = Icons.Rounded.Notifications, contentDescription ="notofication", tint = androidx.compose.ui.graphics.Color.Black)
-        }, colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0x8B07F3A8)))
+        }, colors = topAppBarColors(
+        containerColor = Color(0x8B07F3A8)
+    )
+        )
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 6.dp),horizontalAlignment = Alignment.CenterHorizontally) {
 
-            noteInputText(modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
+            NoteInputText(modifier = Modifier.padding(top = 4.dp, bottom = 4.dp),
                 text = title,
                 label = "Title",
                 onTextChange = {
@@ -80,7 +78,7 @@ fun NoteScreen(modifier: Modifier=Modifier,
                             char.isLetter() || char.isWhitespace()
                         }) title = it
                 } ){}
-            noteInputText(modifier = Modifier.padding(top = 8.dp, bottom = 9.dp),
+            NoteInputText(modifier = Modifier.padding(top = 8.dp, bottom = 9.dp),
                 text = description,
                 label = "Description",
                 onTextChange = {
