@@ -3,10 +3,14 @@ package com.example.notereminderapp.screen
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
+import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
 import androidx.compose.foundation.lazy.staggeredgrid.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -16,18 +20,45 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
+
+data class MNote(val title:String,
+                 val info:String,
+                 val time:String=SimpleDateFormat("EEE MMM yyyy hh:mm a", Locale.getDefault())
+                     .format(Date()))
 @OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun HomeScreen() {
     val sampleNotes = listOf(
-        "Buy groceries",
-        "Meeting at 3PM in conference room with John and team",
-        "Watch movie tonight",
-        "Plan weekend trip to the mountains with friends",
-        "Read Kotlin docs and practice Jetpack Compose layouts",
-        "Call the electrician about fixing the kitchen light"
+        MNote(
+            title = "Buy groceries",
+            info = "Need to buy milk, bread, and eggs from the supermarket"
+        ),
+        MNote(
+            title = "Meeting at 3PM",
+            info = "Conference room with John and team"
+        ),
+        MNote(
+            title = "Watch movie tonight",
+            info = "New release at the local theater"
+        ),
+        MNote(
+            title = "Plan weekend trip",
+            info = "Mountains with friends — book tickets and hotels"
+        ),
+        MNote(
+            title = "Read Kotlin docs",
+            info = "Practice Jetpack Compose layouts"
+        ),
+        MNote(
+            title = "Call electrician",
+            info = "Fix the kitchen light"
+        )
     )
     Box(modifier = Modifier.fillMaxWidth()
         .background(color = MaterialTheme.colorScheme.background))
@@ -41,16 +72,27 @@ fun HomeScreen() {
                     note->
                     NoteCard(note)
                 }
+                item(span = StaggeredGridItemSpan.FullLine){
+                    Spacer(modifier = Modifier.height(120.dp))
+                }
             }
         }
     }
 }
 
 @Composable
-fun NoteCard(note: String) {
-    Card()
+fun NoteCard(note: MNote) {
+    Card(modifier = Modifier.padding(5.dp))
     {
-        Text(text = note)
+        Column()
+        {
+            Text(text = note.title,
+                modifier = Modifier.padding(10.dp))
+            Text(text = note.info,
+                modifier = Modifier.padding(10.dp))
+            Text(text = note.time,
+                modifier = Modifier.padding(10.dp))
+        }
     }
 
 }
