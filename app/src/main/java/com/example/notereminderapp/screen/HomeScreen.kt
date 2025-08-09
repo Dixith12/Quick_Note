@@ -99,7 +99,9 @@ fun HomeScreen() {
             },
             actions = {
                 Icon(imageVector = Icons.Default.ThumbUp,
-                    contentDescription = "Thme")
+                    contentDescription = "Thme",
+                    tint= Color.Black,
+                    modifier = Modifier.padding(end=20.dp))
             })
     }, floatingActionButton = {
         FloatingActionButton(onClick = {
@@ -154,14 +156,15 @@ fun HomeScreen() {
 fun NoteCard(note: MNote) {
     Card(modifier = Modifier.padding(5.dp))
     {
-        Column()
+        Column(modifier = Modifier.fillMaxSize()
+            .padding(horizontal = 2.dp, vertical = 5.dp))
         {
             Text(text = note.title,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(10.dp))
             Text(text = note.info,
-                fontSize = 16.sp,
+                fontSize = 15.sp,
                 fontWeight = FontWeight.W600,
                 modifier = Modifier.padding(10.dp))
             Spacer(modifier = Modifier.height(100.dp))
