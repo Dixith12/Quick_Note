@@ -79,11 +79,12 @@ fun CreateScreen() {
                     description=it
                 },
                 modifier = Modifier.fillMaxWidth()
-                    .padding(top = 50.dp,start = 5.dp,end = 5.dp)
+                    .padding(top = 50.dp,start = 8.dp,end = 8.dp)
                     .height(400.dp),
                 placeholder = {
-                    Text("Enter Note..gk4mgtkgmtrgmt")
+                    Text("Enter Note...")
                 },
+                maxLines = 10,
                 colors = TextFieldDefaults.colors(Color.White))
         }
 
