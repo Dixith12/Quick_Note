@@ -1,8 +1,6 @@
 package com.example.notereminderapp.screen
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,17 +9,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
-import androidx.compose.foundation.lazy.staggeredgrid.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
+import androidx.compose.foundation.lazy.staggeredgrid.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ThumbUp
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
@@ -40,9 +34,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.notereminderapp.model.Note
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -54,45 +48,17 @@ data class MNote(val title:String,
                      .format(Date()))
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
-@Preview
 @Composable
-fun HomeScreen() {
-    val sampleNotes = listOf(
-        MNote(
-            title = "Buy groceries",
-            info = "Need to buy milk, bread, and eggs from the supermarket"
-        ),
-        MNote(
-            title = "Meeting at 3PM",
-            info = "Conference room with John and team"
-        ),
-        MNote(
-            title = "Watch movie tonight",
-            info = "New release at the local theater"
-        ),
-        MNote(
-            title = "Plan weekend trip",
-            info = "Mountains with friends — book tickets and hotels"
-        ),
-        MNote(
-            title = "Read Kotlin docs",
-            info = "Practice Jetpack Compose layouts"
-        ),
-        MNote(
-            title = "Call electrician",
-            info = "Fix the kitchen light"
-        )
-    )
+fun HomeScreen(note:List<Note>) {
     var search by remember {
         mutableStateOf("")
     }
-
 
     Scaffold (
         topBar = {
         TopAppBar(title =
             {
-                Text(text = "Notes",
+                Text(text = "Quick_Note",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     modifier = Modifier.padding(horizontal = 5.dp, vertical = 10.dp))
@@ -138,9 +104,13 @@ fun HomeScreen() {
                 LazyVerticalStaggeredGrid(columns = StaggeredGridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize()
                         .padding(horizontal = 7.dp)) {
-                    items(sampleNotes){
-                            note->
-                        NoteCard(note)
+                    itemsIndexed(note){index,note->
+                        val backgroundColor = if (index % 2 == 0) {
+                            Color(0xD342EF24)
+                        } else {
+                            Color(0xFF38D2D2)
+                        }
+                        NoteCard(note, backgroundColor)
                     }
 
                 }
@@ -153,8 +123,9 @@ fun HomeScreen() {
 }
 
 @Composable
-fun NoteCard(note: MNote) {
-    Card(modifier = Modifier.padding(5.dp))
+fun NoteCard(note: Note, backgroundColor: Color) {
+    Card(modifier = Modifier.padding(5.dp),
+        colors = CardDefaults.cardColors(backgroundColor))
     {
         Column(modifier = Modifier.fillMaxSize()
             .padding(horizontal = 2.dp, vertical = 5.dp))
@@ -162,16 +133,19 @@ fun NoteCard(note: MNote) {
             Text(text = note.title,
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                modifier = Modifier.padding(10.dp))
-            Text(text = note.info,
+                modifier = Modifier.padding(10.dp),
+                color = Color.White)
+            Text(text = note.description,
                 fontSize = 15.sp,
                 fontWeight = FontWeight.W600,
-                modifier = Modifier.padding(10.dp))
+                modifier = Modifier.padding(10.dp),
+                color = Color.White)
             Spacer(modifier = Modifier.height(100.dp))
             Text(text = note.time,
                 fontSize = 12.sp,
                 fontWeight = FontWeight.W400,
-                modifier = Modifier.padding(10.dp))
+                modifier = Modifier.padding(10.dp),
+                color = Color.White)
         }
     }
 
