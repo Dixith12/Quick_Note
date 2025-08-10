@@ -43,6 +43,9 @@ import com.example.notereminderapp.component.noteButton
 import com.example.notereminderapp.component.NoteInputText
 import com.example.notereminderapp.data.Notedatasource
 import com.example.notereminderapp.model.Note
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 @RequiresApi(Build.VERSION_CODES.O)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +64,7 @@ fun NoteScreen(modifier: Modifier=Modifier,
     Column(){
         TopAppBar(title = { Text(text = "Notes", textAlign = TextAlign.Center, fontSize = 27.sp, fontWeight = FontWeight.Bold)}, modifier = modifier.clip(RoundedCornerShape(corner = CornerSize(10.dp))),
             actions = {
-            Icon(imageVector = Icons.Rounded.Notifications, contentDescription ="notofication", tint = androidx.compose.ui.graphics.Color.Black)
+            Icon(imageVector = Icons.Rounded.Notifications, contentDescription ="notofication", tint = Color.Black)
         }, colors = topAppBarColors(
         containerColor = Color(0x8B07F3A8)
     )
@@ -89,7 +92,11 @@ fun NoteScreen(modifier: Modifier=Modifier,
             noteButton(text = "Save", modifier = Modifier.padding(top = 5.dp, bottom = 1.dp), onClick = {
                 if(title.isNotEmpty()&&description.isNotEmpty()){
                     //save/add to list
-                    onAddnote(Note(title = title, description = description))
+                    onAddnote(Note(
+                        title = title, description = description,
+                        time = SimpleDateFormat("EEE MMM yyyy hh:mm a", Locale.getDefault())
+                        .format(Date())
+                    ))
                     Toast.makeText(context,"Note Added",Toast.LENGTH_SHORT).show()
                     title=""
                     description=""
@@ -128,7 +135,7 @@ fun noteRow(notes:Note,
                 Row(horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth()) {
 
                     Text(text = notes.title, fontSize = 17.sp,fontWeight = FontWeight.ExtraBold)
-                    Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Note",modifier = Modifier.clickable {  onNoteClicked.invoke(notes)  }, tint = androidx.compose.ui.graphics.Color.DarkGray)
+                    Icon(imageVector = Icons.Rounded.Delete, contentDescription = "Delete Note",modifier = Modifier.clickable {  onNoteClicked.invoke(notes)  }, tint = Color.DarkGray)
                 }
                 Text(text = notes.description,fontSize = 15.sp, fontWeight = FontWeight.Bold)
                 //Text(text = fromDate(notes.entryDate.time), fontSize = 12.sp, fontWeight = FontWeight.SemiBold)

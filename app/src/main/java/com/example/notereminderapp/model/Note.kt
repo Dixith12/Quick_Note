@@ -20,8 +20,7 @@ data class Note(
                 @ColumnInfo(name = "note_description")
     val description:String,
     @ColumnInfo(name="time")
-    val time:String= SimpleDateFormat("EEE MMM yyyy hh:mm a", Locale.getDefault())
-        .format(Date())
+    val time:String
 
     //@ColumnInfo(name="note_entry_date")
     //val entryDate:Date=Date.from(Instant.now())
