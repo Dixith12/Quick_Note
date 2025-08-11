@@ -17,6 +17,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -45,7 +46,8 @@ import androidx.compose.ui.unit.sp
 fun CreateScreen() {
     Scaffold(topBar = {
         Card(modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp)
+            shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp),
+            colors = CardDefaults.cardColors(Color.White)
         )
         {
             Row(verticalAlignment = Alignment.CenterVertically,

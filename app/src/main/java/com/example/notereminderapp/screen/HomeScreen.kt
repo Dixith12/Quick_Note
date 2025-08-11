@@ -1,6 +1,9 @@
 package com.example.notereminderapp.screen
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,6 +17,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ThumbUp
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.BasicAlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -36,6 +41,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.example.notereminderapp.model.Note
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -49,7 +55,8 @@ data class MNote(val title:String,
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(note:List<Note>) {
+fun HomeScreen(note:List<Note>,
+               onRemoveNote:(Note)->Unit) {
     var search by remember {
         mutableStateOf("")
     }
@@ -110,7 +117,7 @@ fun HomeScreen(note:List<Note>) {
                         } else {
                             Color(0xFF38D2D2)
                         }
-                        NoteCard(note, backgroundColor)
+                        NoteCard(note, backgroundColor,onRemoveNote)
                     }
 
                 }
@@ -122,9 +129,50 @@ fun HomeScreen(note:List<Note>) {
     }
 }
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun NoteCard(note: Note, backgroundColor: Color) {
-    Card(modifier = Modifier.padding(5.dp),
+fun NoteCard(note: Note, backgroundColor: Color, onRemoveNote: (Note) -> Unit) {
+
+    var showdialog by remember {
+        mutableStateOf(false)
+    }
+
+    if (showdialog) {
+        AlertDialog(
+            onDismissRequest = { showdialog = false },
+            title = { Text("Delete Note") },
+            text = { Text("Are you sure you want to delete this note?") },
+            confirmButton = {
+                Text(
+                    "Delete",
+                    color = Color.Red,
+                    modifier = Modifier
+                        .clickable {
+                            onRemoveNote(note)
+                            showdialog = false
+                        }
+                        .padding(8.dp)
+                )
+            },
+            dismissButton = {
+                Text(
+                    "Cancel",
+                    modifier = Modifier
+                        .clickable { showdialog = false }
+                        .padding(8.dp)
+                )
+            }
+        )
+    }
+
+    Card(modifier = Modifier.padding(5.dp)
+        .combinedClickable (onClick = {
+
+        },
+            onLongClick = {
+                showdialog = true
+
+            }),
         colors = CardDefaults.cardColors(backgroundColor))
     {
         Column(modifier = Modifier.fillMaxSize()
