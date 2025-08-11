@@ -32,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.notereminderapp.navigation.Navigation
 import com.example.notereminderapp.screen.NoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -55,12 +56,6 @@ class MainActivity : ComponentActivity() {
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 fun NoteApp(noteViewModel: NoteViewModel = hiltViewModel()) {
-    var notelist = noteViewModel.notelist.collectAsState().value
-
-    NoteScreen(note = notelist, onAddnote = {
-        noteViewModel.addNote(it)
-    }, onRemoveNote = {
-        noteViewModel.removeNote(it)
-    })
+    Navigation()
 }
 

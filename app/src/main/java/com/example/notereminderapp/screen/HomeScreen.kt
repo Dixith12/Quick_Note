@@ -44,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.navigation.NavController
 import com.example.notereminderapp.model.Note
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -57,7 +58,8 @@ data class MNote(val title:String,
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(note:List<Note>,
+fun HomeScreen(navController: NavController,
+               note:List<Note>,
                onRemoveNote:(Note)->Unit) {
     var search by remember {
         mutableStateOf("")

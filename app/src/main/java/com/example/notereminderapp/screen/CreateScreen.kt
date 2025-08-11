@@ -43,6 +43,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.notereminderapp.model.Note
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -52,7 +53,8 @@ import java.util.Locale
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-fun CreateScreen(onAddNewNote:(Note)->Unit) {
+fun CreateScreen(navController: NavController,
+                 onAddNewNote:(Note)->Unit) {
     var description by remember{
         mutableStateOf("")
     }
