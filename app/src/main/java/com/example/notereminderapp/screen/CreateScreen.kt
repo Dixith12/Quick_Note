@@ -64,47 +64,47 @@ fun CreateScreen(navController: NavController,
     }
     var context = LocalContext.current
     Scaffold(topBar = {
-        Card(modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp),
-            colors = CardDefaults.cardColors(Color.White)
-        )
-        {
-            Row(verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 20.dp)
-                    .fillMaxWidth())
-            {
 
+        TopAppBar(title={
+            Text("Add Note",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold)
+        },
+            navigationIcon = {
                 Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
                     modifier = Modifier.size(26.dp)
                         .clickable {
                             navController.navigate(Screens.HomeScreen.route)
                         })
-                Text("Add Note",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold)
 
+            }
+            ,
+            actions = {
                 Icon(imageVector = Icons.Default.Check,
                     contentDescription = "Add Note",
                     modifier = Modifier.size(26.dp)
                         .clickable {
-                            if(title.isNotEmpty()&&description.isNotEmpty()){
-                                //save/add to list
-                                onAddNewNote(Note(
-                                    title = title, description = description,
-                                    time = SimpleDateFormat("EEE MMM yyyy hh:mm a", Locale.getDefault())
-                                        .format(Date())
-                                ))
-                                Toast.makeText(context,"Note Added", Toast.LENGTH_SHORT).show()
-                                title=""
-                                description=""
-                                navController.navigate(Screens.HomeScreen.route)
+                            if(title.isEmpty()||description.isEmpty())
+                            {
+                                Toast.makeText(context,"Fill the field", Toast.LENGTH_SHORT).show()
                             }
+                            else
+                                if(title.isNotEmpty()&&description.isNotEmpty()){
+                                    //save/add to list
+                                    onAddNewNote(Note(
+                                        title = title, description = description,
+                                        time = SimpleDateFormat("EEE MMM yyyy hh:mm a", Locale.getDefault())
+                                            .format(Date())
+                                    ))
+                                    Toast.makeText(context,"Note Added", Toast.LENGTH_SHORT).show()
+                                    title=""
+                                    description=""
+                                    navController.navigate(Screens.HomeScreen.route)
+                                }
                         })
 
-            }
-        }
+            })
     }){ innerPadding->
 
         Column(modifier = Modifier.fillMaxSize()
