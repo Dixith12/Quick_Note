@@ -64,7 +64,6 @@ fun CreateScreen(navController: NavController,
     }
     var context = LocalContext.current
     Scaffold(topBar = {
-
         TopAppBar(title={
             Text("Add Note",
                 fontSize = 20.sp,
@@ -78,30 +77,21 @@ fun CreateScreen(navController: NavController,
                             navController.navigate(Screens.HomeScreen.route)
                         })
 
-            }
-            ,
-            actions = {
                 Icon(imageVector = Icons.Default.Check,
                     contentDescription = "Add Note",
                     modifier = Modifier.size(26.dp)
                         .clickable {
-                            if(title.isEmpty()||description.isEmpty())
-                            {
-                                Toast.makeText(context,"Fill the field", Toast.LENGTH_SHORT).show()
+                            if(title.isNotEmpty()&&description.isNotEmpty()){
+                                //save/add to list
+                                onAddNewNote(Note(
+                                    title = title, description = description,
+                                    time = SimpleDateFormat("EEE MMM yyyy hh:mm a", Locale.getDefault())
+                                        .format(Date())
+                                ))
+                                Toast.makeText(context,"Note Added", Toast.LENGTH_SHORT).show()
+                                title=""
+                                description=""
                             }
-                            else
-                                if(title.isNotEmpty()&&description.isNotEmpty()){
-                                    //save/add to list
-                                    onAddNewNote(Note(
-                                        title = title, description = description,
-                                        time = SimpleDateFormat("EEE MMM yyyy hh:mm a", Locale.getDefault())
-                                            .format(Date())
-                                    ))
-                                    Toast.makeText(context,"Note Added", Toast.LENGTH_SHORT).show()
-                                    title=""
-                                    description=""
-                                    navController.navigate(Screens.HomeScreen.route)
-                                }
                         })
 
             })
