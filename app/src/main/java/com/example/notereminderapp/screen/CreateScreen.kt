@@ -105,44 +105,6 @@ fun CreateScreen(navController: NavController,
                         })
 
             })
-        Card(modifier = Modifier.fillMaxWidth()
-            ,
-            shape = RoundedCornerShape(bottomStart = 8.dp, bottomEnd = 8.dp),
-            colors = CardDefaults.cardColors(Color.White)
-        )
-        {
-            Row(verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween,
-                modifier = Modifier.padding(horizontal = 10.dp, vertical = 20.dp)
-                    .fillMaxWidth())
-            {
-
-                Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                    contentDescription = "Back",
-                    modifier = Modifier.size(26.dp))
-                Text("Add Note",
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Bold)
-
-                Icon(imageVector = Icons.Default.Check,
-                    contentDescription = "Add Note",
-                    modifier = Modifier.size(26.dp)
-                        .clickable {
-                            if(title.isNotEmpty()&&description.isNotEmpty()){
-                                //save/add to list
-                                onAddNewNote(Note(
-                                    title = title, description = description,
-                                    time = SimpleDateFormat("EEE MMM yyyy hh:mm a", Locale.getDefault())
-                                        .format(Date())
-                                ))
-                                Toast.makeText(context,"Note Added", Toast.LENGTH_SHORT).show()
-                                title=""
-                                description=""
-                            }
-                        })
-
-            }
-        }
     }){ innerPadding->
 
         Column(modifier = Modifier.fillMaxSize()
