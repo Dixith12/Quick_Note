@@ -117,9 +117,9 @@ fun HomeScreen(navController: NavController,
                         .padding(horizontal = 7.dp)) {
                     itemsIndexed(note){index,note->
                         val backgroundColor = if (index % 2 == 0) {
-                            Color(0xD342EF24)
+                            Color(0xD3E59187)
                         } else {
-                            Color(0xFF38D2D2)
+                            Color(0xFFBC74DE)
                         }
                         NoteCard(note, backgroundColor,onRemoveNote)
                     }
