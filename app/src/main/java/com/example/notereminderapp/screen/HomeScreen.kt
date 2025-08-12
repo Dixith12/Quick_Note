@@ -46,6 +46,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.navigation.NavController
 import com.example.notereminderapp.model.Note
+import com.example.notereminderapp.navigation.Screens
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -82,7 +83,7 @@ fun HomeScreen(navController: NavController,
             })
     }, floatingActionButton = {
         FloatingActionButton(onClick = {
-
+            navController.navigate(Screens.CreateScreen.route)
         },
             containerColor = Color.Black) {
             Icon(imageVector = Icons.Default.Add,
