@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.notereminderapp.model.Note
+import com.example.notereminderapp.navigation.Screens
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -76,7 +77,10 @@ fun CreateScreen(navController: NavController,
 
                 Icon(imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    modifier = Modifier.size(26.dp))
+                    modifier = Modifier.size(26.dp)
+                        .clickable {
+                            navController.navigate(Screens.HomeScreen.route)
+                        })
                 Text("Add Note",
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Bold)
@@ -95,6 +99,7 @@ fun CreateScreen(navController: NavController,
                                 Toast.makeText(context,"Note Added", Toast.LENGTH_SHORT).show()
                                 title=""
                                 description=""
+                                navController.navigate(Screens.HomeScreen.route)
                             }
                         })
 
